@@ -33,13 +33,19 @@ body {
   font-size: 0.6rem;
   background-color: var(--color-dark--1);
   padding: 3rem 5rem 4rem 5rem;
-  border: 1px solid red;
+
   display: flex;
   flex-direction: column;
   list-style: none;
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+.workout--running {
+  border-left: 5px solid var(--color-brand--2);
+}
+.workout--cycling {
+  border-left: 5px solid var(--color-brand--1);
 }
 .menu_item {
   background-color: var(--color-dark--2);

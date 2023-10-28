@@ -10,7 +10,7 @@ export const Sidebar = ({ setCenter }) => {
   function MenuItem({ workout, setCenter }) {
     return (
       <div
-        className="menu_item"
+        className={`menu_item workout--${workout.type}`}
         onClick={() => {
           console.log("clicked");
           //console.log(workout);
@@ -18,7 +18,7 @@ export const Sidebar = ({ setCenter }) => {
         }}
       >
         <img src={workout.flag} width={40} height={30}></img>
-        <Stack direction="horizontal" gap={2}>
+        <Stack direction="horizontal" gap={1}>
           <div className="p-2">
             <label
               className="form-label"
@@ -44,7 +44,7 @@ export const Sidebar = ({ setCenter }) => {
             </label>
           </div>
         </Stack>
-        <Stack direction="horizontal" gap={2}>
+        <Stack direction="horizontal" gap={1}>
           <div className="p-2">
             <label
               aria-describedby="coDesc"
