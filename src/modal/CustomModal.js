@@ -36,8 +36,6 @@ export const CustomModal = ({ active, setActive }) => {
   useEffect(
     function () {
       closeModal();
-      //console.log(workouts);
-      //localStorage.removeItem("workouts");
     },
     [workouts]
   );

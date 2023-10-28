@@ -8,8 +8,8 @@ import {
   useMap,
   useMapEvents,
 } from "react-leaflet";
-import img1 from "../img/char5.gif";
-import img2 from "../img/bulb5.gif";
+import img1 from "./run1.gif";
+import img2 from "./cycle.gif";
 import { WorkoutContext, WorkoutsContext } from "./App";
 import {
   COORDS,
@@ -48,9 +48,10 @@ function RenderMarker({ workout }) {
   );
 }
 
-export const Map = ({ setActive, center }) => {
+export const Map = ({ setActive, center, setCred }) => {
   const { setWorkout } = useContext(WorkoutContext);
   const { workouts } = useContext(WorkoutsContext);
+
   function MoveTo({ mCoords }) {
     const map = useMap();
     useEffect(
@@ -131,15 +132,23 @@ export const Map = ({ setActive, center }) => {
       },
     });
   }
+  function updateInput(evt) {
+    setCred((prev) => {
+      return { ...prev, [evt.target.name]: evt.target.value };
+    });
+  }
+  function loginUser() {}
 
   return (
-    <MapContainer zoom={13} center={COORDS} id="map">
-      <TileLayer url={URL} attribution={ATTRIBUTION} />
-      <EventHandlers />
-      <MoveTo mCoords={center} />
-      {workouts.map((workout, i) => (
-        <RenderMarker key={i} workout={workout} />
-      ))}
-    </MapContainer>
+    <>
+      <MapContainer zoom={13} center={COORDS} id="map">
+        <TileLayer url={URL} attribution={ATTRIBUTION} />
+        <EventHandlers />
+        <MoveTo mCoords={center} />
+        {workouts.map((workout, i) => (
+          <RenderMarker key={i} workout={workout} />
+        ))}
+      </MapContainer>
+    </>
   );
 };

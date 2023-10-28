@@ -14,7 +14,7 @@ export const WorkoutsContext = createContext(null);
 const App = () => {
   const [workout, setWorkout] = useState(clearWorkout());
   const [center, setCenter] = useState([]);
-  const [workouts, setWorkouts] = useState([]);
+  const [workouts, setWorkouts] = useState(getStorage());
   const [active, setActive] = useState(false);
   //function for recreating properties
   //gave up on lines to recreate locatin name over array with await and async

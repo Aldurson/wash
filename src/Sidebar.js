@@ -23,37 +23,25 @@ export const Sidebar = ({ setCenter }) => {
             <label
               className="form-label"
               aria-describedby="durDesc"
-              name="duration"
+              name="Duration"
+              onMouseOver={(evt) => console.log(evt.target)}
+              onMouseOut={(evt) => console.log(evt.target)}
             >
-              {workout.duration}
+              ⏰ {workout.duration + " min"}
             </label>
-            <small id="durDesc" className="text muted">
-              ⏰ Duration
-            </small>
           </div>
           <div className="p-2">
             <label
               aria-describedby="distDesc"
               name="distance"
               className="form-label"
+              onMouseOver={(evt) => console.log(evt.target)}
+              onMouseOut={(evt) => console.log(evt.target)}
             >
-              {workout.distance}
+              {`${workout.type === "running" ? "🏃🏿‍♂️" : `🚵🏿‍♀️`} ${
+                workout.distance
+              } km`}
             </label>
-            <small id="distDesc" className="text muted">
-              {`${workout.type === "running" ? "🏃🏿‍♂️" : `🚵🏿‍♀️`} Distance`}
-            </small>
-          </div>
-          <div className="p-2">
-            <label
-              name="type"
-              aria-describedby="typDesc"
-              className="form-label"
-            >
-              {workout.type}
-            </label>
-            <small id="typDesc" className="text muted">
-              {`${workout.type === "running" ? "🏃🏿‍♂️" : `🚵🏿‍♀️`} Type`}
-            </small>
           </div>
         </Stack>
         <Stack direction="horizontal" gap={2}>
@@ -62,23 +50,23 @@ export const Sidebar = ({ setCenter }) => {
               aria-describedby="coDesc"
               name="coords"
               className="form-label"
-            >{`[${workout.coords[0]}, ${workout.coords[1]}]`}</label>
-            <small id="coDesc" className="text muted">
-              🌍 Co-ords
-            </small>
+              onMouseOver={(evt) => console.log(evt.target)}
+              onMouseOut={(evt) => console.log(evt.target)}
+            >{`🌍 Co-ords : [${workout.coords[0]}, ${workout.coords[1]}]`}</label>
           </div>
+        </Stack>
+        <Stack direction="horizontal" gap={2}>
           <div className="p-2">
             <label
               aria-describedby="desDesc"
               name="description"
               className="form-label"
+              onMouseOver={(evt) => console.log(evt.target)}
+              onMouseOut={(evt) => console.log(evt.target)}
               size={100}
             >
-              {workout.description}
+              📰 Description : {workout.description}
             </label>
-            <small id="desDesc" className="text muted">
-              📰 Description
-            </small>
           </div>
         </Stack>
         <Stack direction="horizontal" gap={2}>
@@ -88,26 +76,23 @@ export const Sidebar = ({ setCenter }) => {
               name={workout.type === "running" ? "cadence" : "elevation"}
               aria-describedby="cadDesc"
             >
+              {workout.type === "running" ? `🦶🏿 Cadence` : `⛰ Elevation`}{" "}
               {workout.type === "running" ? workout.cadence : workout.elevation}
             </label>
-            <small id="cadDesc" className="text muted">
-              {workout.type === "running" ? `🦶🏿 Cadence` : `⛰ Elevation`}
-            </small>
           </div>
           <div className="p-2">
             <label
               className="form-label"
               name={workout.type === "running" ? "pace" : "speed"}
               aria-describedby="pacDesc"
-              value={
+              value={`${
+                workout.type === "running" ? `⚡️ Pace` : `⚡️ Speed`
+              } ${
                 workout.type === "running"
                   ? `${workout.pace} min/m`
                   : `${workout.speed} km/h`
-              }
+              }`}
             />
-            <small id="pacDesc" className="text muted">
-              {workout.type === "running" ? `⚡️ Pace` : `⚡️ Speed`}
-            </small>
           </div>
         </Stack>
       </div>
