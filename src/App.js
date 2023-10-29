@@ -33,6 +33,7 @@ const App = () => {
       } at ${dat.name}.`;
       return dat;
     };
+
     const data = JSON.parse(localStorage.getItem("workouts"));
     if (!data) return [];
     return data.map((dat) => regen3(dat));
@@ -40,7 +41,7 @@ const App = () => {
   useEffect(
     function () {
       if (!workouts) return;
-      //localStorage.removeItem("workouts");
+      localStorage.removeItem("workouts");
       localStorage.setItem("workouts", JSON.stringify(workouts));
     },
     [workouts]

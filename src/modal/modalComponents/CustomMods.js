@@ -11,44 +11,12 @@ import {
 import axios from "axios";
 
 export const CustomHead = () => {
-  const { workouts } = useContext(WorkoutsContext);
   const { workout, setWorkout } = useContext(WorkoutContext);
-  useEffect(
-    function () {
-      //const temp = console.log("loading country image");
-      axios
-        .get(`https://flagcdn.com/40x30/${workout.country_code}.png`)
-        .then((resp) => {
-          //console.log("there was a response");
 
-          setWorkout((prev) => {
-            return { ...prev, flag: resp.data };
-          });
-        })
-        .catch((err) => {
-          console.log(`There is an error: ${err}`);
-        });
-    },
-    [workout.country_code]
-  );
-  function DescriptFlag(img) {
-    const divStyle = {
-      backgroundImage: `url('${img}')`,
-      width: "6px",
-      height: "6px",
-    };
-    return <div className="flag" style={divStyle}></div>;
-  }
   return (
     <ModalHeader>
       <ModalTitle>Enter Workout Details </ModalTitle>
-      <img
-        src={workout.flag}
-        width="40"
-        height="30"
-        style={{ border: "1px solid red", borderRadius: "6px" }}
-        alt="None"
-      ></img>
+      <img src={workout.flag} width="40" height="30" alt="None"></img>
     </ModalHeader>
   );
 };

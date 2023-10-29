@@ -1,5 +1,5 @@
 import L from "leaflet";
-import React, { useCallback, useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   MapContainer,
   Marker,
@@ -91,6 +91,7 @@ export const Map = ({ setActive, center, setCred }) => {
             country: country,
             state: state,
             country_code: country_code,
+            flag: `https://flagcdn.com/40x30/${country_code}.png`,
           };
         });
       })

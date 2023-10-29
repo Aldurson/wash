@@ -17,11 +17,9 @@
     "leaflet": "^1.9.4",
     "polyfill": "^0.1.0",
     "react": "^18.2.0",
-    "react-bootstrap-range-slider": "^3.0.8",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
     "react-native-country-flag": "^2.0.2",
-    "react-select": "^5.7.4",
     "reverse-geocoding": "^3.0.2"
   },
   "devDependencies": {
