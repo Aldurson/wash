@@ -1,4 +1,4 @@
-import { WorkoutContext } from "../../App";
+import { WorkoutContext } from "../../../App.js";
 import { useContext, useEffect, useState } from "react";
 import {
   ModalHeader,

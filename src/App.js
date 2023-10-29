@@ -2,7 +2,7 @@ import reactDom from "react-dom/client";
 import "./css/styles.css";
 import React, { useState, createContext, useEffect } from "react";
 import { Map } from "./components/Map";
-import { CustomModal } from "./modal/CustomModal";
+import { CustomModal } from "./components/CustomModal";
 import { Sidebar } from "./components/Sidebar";
 import { clearWorkout } from "./components/config.js";
 

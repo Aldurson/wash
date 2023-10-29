@@ -1,16 +1,24 @@
 {
   "name": "wash",
   "version": "1.0.0",
-  "description": "wash",
+  "description": "Combination of Udemy Javascript zero to Hero course, and other sources lessons and customization",
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production"
   },
   "keywords": [
-    "wash",
-    "life"
+    "React",
+    "Api calls",
+    "revers geolocation",
+    "bootstrap",
+    "webpack",
+    "git",
+    "HTML & css",
+    "Javascript",
+    "leaflet",
+    "babel"
   ],
-  "author": "Ntlaletseng Nyamah",
+  "author": "Ntlaletseng Samuel Nyamah",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.0",

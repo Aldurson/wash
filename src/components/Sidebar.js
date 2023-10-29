@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { WorkoutsContext } from "../App";
 import React from "react";
-import "../css/styles.css";
 
 export const Sidebar = ({ setCenter }) => {
   const { workouts } = useContext(WorkoutsContext);

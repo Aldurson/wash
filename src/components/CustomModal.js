@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
-import { WorkoutContext, WorkoutsContext } from "../App";
+import { WorkoutContext, WorkoutsContext } from "../App.js";
 import { Modal } from "react-bootstrap";
-import { clearWorkout } from "../components/config.js";
+import { clearWorkout } from "./config.js";
 import {
   CustomBody,
   CustomFoot,
   CustomHead,
-} from "./modalComponents/CustomMods";
+} from "./modal/modalComponents/CustomMods.js";
 
 export const CustomModal = ({ active, setActive }) => {
   const { workout, setWorkout } = useContext(WorkoutContext);
