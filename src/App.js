@@ -16,8 +16,7 @@ const App = () => {
   const [center, setCenter] = useState([]);
   const [workouts, setWorkouts] = useState(getStorage());
   const [active, setActive] = useState(false);
-  //function for recreating properties
-  //gave up on lines to recreate locatin name over array with await and async
+
   function getStorage() {
     const regen3 = (dat) => {
       //dat.protoype.name = await setName(dat.lat, dat.lng);

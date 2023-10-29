@@ -34,11 +34,13 @@ export const CustomBody = ({ onSubmit }) => {
       // geolocation here. find an api to get country flags
       const longDesc = `${workout.type[0].toUpperCase()}${workout.type.slice(
         1
-      )} on ${workout.date} at ${workout.city}.`;
+      )} on ${workout.date} in ${workout.country}.`;
 
       const shDesc = `${workout.type[0].toUpperCase()}${workout.type.slice(
         1
-      )} at city: ${workout.city}, country: ${workout.country}.`;
+      )} at city: ${workout.city || "unknown city"}, country: ${
+        workout.country
+      }.`;
 
       setWorkout((prev) => {
         return { ...prev, description: longDesc, shortDescription: shDesc };
