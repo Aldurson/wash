@@ -8,9 +8,9 @@ import {
   useMap,
   useMapEvents,
 } from "react-leaflet";
-import img1 from "./run1.gif";
-import img2 from "./cycle.gif";
-import { WorkoutContext, WorkoutsContext } from "./App";
+import img1 from "../img/run.gif";
+import img2 from "../img/cycle.gif";
+import { WorkoutContext, WorkoutsContext } from "../App";
 import {
   COORDS,
   URL,
@@ -40,14 +40,13 @@ function RenderMarker({ workout }) {
       <Popup
         closeButton={false}
         className={`${workout.type}-popup`}
-        offset={[0, -70]}
+        offset={[0, -80]}
       >
         {workout.shortDescription}
       </Popup>
     </Marker>
   );
 }
-
 export const Map = ({ setActive, center, setCred }) => {
   const { setWorkout } = useContext(WorkoutContext);
   const { workouts } = useContext(WorkoutsContext);
@@ -70,8 +69,6 @@ export const Map = ({ setActive, center, setCred }) => {
     fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
-        //the line below can be made cleaner, i dont know how yet
-
         const {
           city,
           country,
@@ -96,7 +93,7 @@ export const Map = ({ setActive, center, setCred }) => {
         });
       })
       .catch((err) => {
-        console.log(`error ${err}`);
+        console.log(`error Tlale ${err}`);
         setWorkout((prev) => {
           return { ...prev, name: "No Name" };
         });
@@ -138,8 +135,6 @@ export const Map = ({ setActive, center, setCred }) => {
       return { ...prev, [evt.target.name]: evt.target.value };
     });
   }
-  function loginUser() {}
-
   return (
     <>
       <MapContainer zoom={13} center={COORDS} id="map">

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { WorkoutContext, WorkoutsContext } from "../App";
 import { Modal } from "react-bootstrap";
-import { clearWorkout } from "../config.js";
+import { clearWorkout } from "../components/config.js";
 import {
   CustomBody,
   CustomFoot,
@@ -31,6 +31,7 @@ export const CustomModal = ({ active, setActive }) => {
     //   return data;
     // };
     evt.preventDefault();
+
     setWorkouts((prev) => [...prev, workout]);
   }
   useEffect(

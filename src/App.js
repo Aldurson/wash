@@ -1,10 +1,10 @@
 import reactDom from "react-dom/client";
 import "./css/styles.css";
 import React, { useState, createContext, useEffect } from "react";
-import { Map } from "./Map";
+import { Map } from "./components/Map";
 import { CustomModal } from "./modal/CustomModal";
-import { Sidebar } from "./Sidebar";
-import { clearWorkout } from "./config.js";
+import { Sidebar } from "./components/Sidebar";
+import { clearWorkout } from "./components/config.js";
 
 const root = reactDom.createRoot(document.getElementById("root"));
 
@@ -12,9 +12,9 @@ export const WorkoutContext = createContext(null);
 export const WorkoutsContext = createContext(null);
 
 const App = () => {
+  const [workouts, setWorkouts] = useState(getStorage());
   const [workout, setWorkout] = useState(clearWorkout());
   const [center, setCenter] = useState([]);
-  const [workouts, setWorkouts] = useState(getStorage());
   const [active, setActive] = useState(false);
 
   function getStorage() {
@@ -32,7 +32,7 @@ const App = () => {
       } at ${dat.name}.`;
       return dat;
     };
-
+    //localStorage.removeItem("workouts");
     const data = JSON.parse(localStorage.getItem("workouts"));
     if (!data) return [];
     return data.map((dat) => regen3(dat));

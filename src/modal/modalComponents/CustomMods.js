@@ -1,4 +1,4 @@
-import { WorkoutsContext, WorkoutContext } from "../../App";
+import { WorkoutContext } from "../../App";
 import { useContext, useEffect, useState } from "react";
 import {
   ModalHeader,
@@ -8,11 +8,9 @@ import {
   ModalFooter,
   Button,
 } from "react-bootstrap";
-import axios from "axios";
 
 export const CustomHead = () => {
-  const { workout, setWorkout } = useContext(WorkoutContext);
-
+  const { workout } = useContext(WorkoutContext);
   return (
     <ModalHeader>
       <ModalTitle>Enter Workout Details </ModalTitle>
@@ -30,25 +28,50 @@ export const CustomBody = ({ onSubmit }) => {
   }
   useEffect(
     function () {
-      // put all functions related to return of reverse,
-      // geolocation here. find an api to get country flags
+      const isRunning = workout.type == "running";
+      if (isRunning)
+        setWorkout((prev) => {
+          return {
+            ...prev,
+            pace: (workout.duration / workout.distance).toFixed(2),
+          };
+        });
+      if (!isRunning)
+        setWorkout((prev) => {
+          return {
+            ...prev,
+            speed: (workout.duration / (workout.distance / 60)).toFixed(2),
+          };
+        });
+    },
+    [workout.distance, workout.duration, workout.type]
+  );
+  useEffect(
+    function () {
+      const isRunning = workout.type === "running";
       const longDesc = `${workout.type[0].toUpperCase()}${workout.type.slice(
         1
-      )} on ${workout.date} in ${workout.country}.`;
-
+      )} on ${workout.date} in ${workout.country || "unknown"} at ${
+        isRunning
+          ? `cadence of ${workout.cadence} spm`
+          : `elevation of ${workout.elevation} m`
+      } at ${
+        isRunning
+          ? `pace of ${workout.pace} min/km`
+          : `speed of ${workout.speed} km/h`
+      }.`;
       const shDesc = `${workout.type[0].toUpperCase()}${workout.type.slice(
         1
-      )} at city: ${workout.city || "unknown city"}, country: ${
-        workout.country
+      )} at ${workout.city || "unknown city"}, ${
+        workout.country || "unknown country"
       }.`;
-
       setWorkout((prev) => {
         return { ...prev, description: longDesc, shortDescription: shDesc };
       });
       if (workout.type === "running") setTypes(true);
       if (workout.type === "cycling") setTypes(false);
     },
-    [workout.type, workout.city]
+    [workout.type, workout.city, workout.cadence, workout.pace]
   );
   return (
     <ModalBody>
@@ -143,7 +166,7 @@ export const CustomBody = ({ onSubmit }) => {
               aria-describedby="cadDesc"
             />
             <small id="cadDesc" className="text muted">
-              🦶🏿 Cadence
+              🦶🏿 Cadence (spm)
             </small>
           </div>
           <div className="p-2">
@@ -151,14 +174,13 @@ export const CustomBody = ({ onSubmit }) => {
               className="form-control"
               name="pace"
               placeholder={0}
+              type="number"
               disabled={true}
               aria-describedby="pacDesc"
-              value={`${(workout.duration / workout.distance).toFixed(
-                2
-              )} min/m`}
+              value={workout.pace}
             />
             <small id="pacDesc" className="text muted">
-              ⚡️ Pace
+              ⚡️ Pace (min/m)
             </small>
           </div>
         </Stack>
@@ -175,22 +197,21 @@ export const CustomBody = ({ onSubmit }) => {
               aria-describedby="elDesc"
             />
             <small id="elDesc" className="text muted">
-              ⛰ Elevation
+              ⛰ Elevation (m)
             </small>
           </div>
           <div className="p-2">
             <input
               className="form-control"
               name="speed"
+              type="number"
               placeholder={0}
               disabled={true}
               aria-describedby="spDesc"
-              value={`${(workout.distance / (workout.duration / 60)).toFixed(
-                2
-              )} km/h`}
+              value={workout.speed}
             />
             <small id="spDesc" className="text muted">
-              ⚡️ Speed
+              ⚡️ Speed (km/h)
             </small>
           </div>
         </Stack>
