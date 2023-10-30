@@ -45,7 +45,7 @@ export const Sidebar = ({ setCenter }) => {
   return (
     <div className="sidebar">
       <h2 style={{ textAlign: "center" }}>Exercises</h2>
-      <div style={{ overflowY: "scroll" }}>
+      <div style={{ overflow: "auto" }}>
         {workouts.map((workout, i) => (
           <MenuItem key={i} workout={workout} setCenter={setCenter} />
         ))}
