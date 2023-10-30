@@ -2,6 +2,7 @@ export const URL = "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png";
 export const ATTRIBUTION =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 export const ZOOM = 9;
+//should not hard code this key, should change this ? env variable?
 export const revGeoApi = "3c9ef7c7a5494283b4ddc09b8465ed57";
 export const COORDS = [-33.92, 18.42];
 export const reverseGeocodingUrl = (lat, lng, revGeoApi) =>
