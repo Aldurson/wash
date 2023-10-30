@@ -5,7 +5,7 @@ import { Map } from "./components/Map";
 import { CustomModal } from "./components/CustomModal";
 import { Sidebar } from "./components/Sidebar";
 import { clearWorkout } from "./components/config.js";
-
+import img1 from "./img/logo1.png";
 const root = reactDom.createRoot(document.getElementById("root"));
 
 export const WorkoutContext = createContext(null);
@@ -46,17 +46,53 @@ const App = () => {
     [workouts]
   );
   return (
-    <div className="container">
-      <React.StrictMode>
-        <WorkoutContext.Provider value={{ workout, setWorkout }}>
-          <WorkoutsContext.Provider value={{ workouts, setWorkouts }}>
-            <Sidebar setCenter={setCenter} />
-            <Map setActive={setActive} center={center} />
-            <CustomModal active={active} setActive={setActive} />
-          </WorkoutsContext.Provider>
-        </WorkoutContext.Provider>
-      </React.StrictMode>
-    </div>
+    <>
+      <div className="logBlock">
+        <nav className="navInfo">
+          <p>Welcome to Run/Cycle Tracker</p>
+          <img className="logo" src={img1} alt="no pic" />
+          <form className="login">
+            <input className="login__input" placeholder="Just Click" />
+            <input className="login__input" placeholder="Submit" />
+            <button
+              className="login__btn"
+              onClick={(evt) => {
+                evt.preventDefault();
+                const log = evt.target.closest("div");
+                log.style.opacity = 0;
+                log.style.zIndex = 0;
+              }}
+            >
+              &rarr;
+            </button>
+          </form>
+        </nav>
+      </div>
+      <div className="container">
+        <React.StrictMode>
+          <WorkoutContext.Provider value={{ workout, setWorkout }}>
+            <WorkoutsContext.Provider value={{ workouts, setWorkouts }}>
+              <Sidebar setCenter={setCenter} />
+              <Map setActive={setActive} center={center} />
+              <div
+                style={{
+                  position: "absolute",
+                  top: "1.5rem",
+                  right: "1.5rem",
+                  color: "red",
+                  zIndex: "9000",
+                  textAlign: "center",
+                  justifyItems: "center",
+                }}
+              >
+                Click on Map
+              </div>
+              <CustomModal active={active} setActive={setActive} />
+            </WorkoutsContext.Provider>
+          </WorkoutContext.Provider>
+        </React.StrictMode>
+      </div>
+    </>
   );
 };
 
