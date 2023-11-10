@@ -6,6 +6,7 @@ import { CustomModal } from "./components/CustomModal";
 import { Sidebar } from "./components/Sidebar";
 import { clearWorkout } from "./components/config.js";
 import { Login } from "./components/Login";
+import { metaConnection } from "./components/config.js";
 const root = reactDom.createRoot(document.getElementById("root"));
 
 export const WorkoutContext = createContext(null);
@@ -16,6 +17,10 @@ const App = () => {
   const [workout, setWorkout] = useState(clearWorkout());
   const [center, setCenter] = useState([]);
   const [active, setActive] = useState(false);
+  const [data, setData] = useState([]);
+  const [counter, setCounter] = useState(0);
+  const [account, setAccount] = useState("");
+  const [connection, setConnection] = useState("");
 
   function getStorage() {
     const regen3 = (dat) => {
@@ -45,6 +50,52 @@ const App = () => {
     },
     [workouts]
   );
+
+  useEffect(function () {
+    try {
+      console.log("Not Connected");
+      metaConnection(setAccount, setConnection);
+    } catch (err) {
+      console.log(err.message);
+    }
+
+    return () => {
+      connection.close();
+      account.undeploy();
+    };
+  }, []);
+  useEffect(
+    function () {
+      let timer;
+      if (account?.connectionStatus === "CONNECTED") {
+        timer = setInterval(() => {
+          if (account?.connectionStatus === "CONNECTED") {
+            console.log("Connected");
+            const data = connection
+              .getDealsByTimeRange(
+                new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+                new Date()
+              )
+              .then((data) => {
+                const { deals } = data;
+                console.log(deals);
+              });
+            console.log(data);
+          } else {
+            try {
+              console.log("Not Connected");
+              metaConnection(setAccount, setConnection);
+            } catch (err) {
+              console.log(err.message);
+            }
+          }
+        }, 60000);
+      }
+      return () => clearInterval(timer);
+    },
+    [account]
+  );
+
   return (
     <>
       <div className="container">
