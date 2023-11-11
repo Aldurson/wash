@@ -2,20 +2,19 @@ import reactDom from "react-dom/client";
 import "./css/styles.css";
 import React, { useState, createContext, useEffect } from "react";
 import { Map } from "./components/Map";
-
+import { CustomModal } from "./components/CustomModal";
 import { Sidebar } from "./components/Sidebar";
 
 import { metaConnection } from "./components/config.js";
+import { Button } from "react-bootstrap";
 const root = reactDom.createRoot(document.getElementById("root"));
-
 export const DataContext = createContext(null);
 
 const App = () => {
-  const [center, setCenter] = useState([]);
-  const [active, setActive] = useState(false);
   const [data, setData] = useState([]);
   const [account, setAccount] = useState("");
   const [connection, setConnection] = useState("");
+  const [active, setActive] = useState(false);
 
   useEffect(
     function () {
@@ -43,6 +42,7 @@ const App = () => {
       const timer = setInterval(() => {
         try {
           console.log("Connected");
+
           const data = connection
             .getDealsByTimeRange(
               new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
@@ -62,15 +62,19 @@ const App = () => {
     },
     [account]
   );
-
+  function butLive(e) {
+    console.log("kgosi nyamah");
+    setActive(true);
+  }
   return (
     <>
       <div className="container">
         <React.StrictMode>
           <DataContext.Provider value={{ data }}>
-            <Sidebar setCenter={setCenter} />
+            <Sidebar />
             <Map setActive={setActive} />
             <div
+              onClick={butLive}
               style={{
                 position: "absolute",
                 top: "1.5rem",
@@ -79,10 +83,13 @@ const App = () => {
                 zIndex: "9000",
                 textAlign: "center",
                 justifyItems: "center",
+                width: "12rem",
+                height: "6rem",
+                border: "1px solid red",
+                borderRadius: "3px",
               }}
-            >
-              Click on Map
-            </div>
+            ></div>
+            <CustomModal active={active} setActive={setActive} />
           </DataContext.Provider>
         </React.StrictMode>
       </div>

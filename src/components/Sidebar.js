@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { DataContext } from "../App";
 import React from "react";
 
-export const Sidebar = ({ setCenter }) => {
+export const Sidebar = () => {
   const { data } = useContext(DataContext);
 
   function MenuItem({ data, setCenter }) {
