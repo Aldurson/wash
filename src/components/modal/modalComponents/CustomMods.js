@@ -7,6 +7,7 @@ import {
   ModalFooter,
   Button,
 } from "react-bootstrap";
+import { CustomDough } from "../../CustomDough";
 
 export const CustomHead = () => {
   return (
@@ -17,7 +18,13 @@ export const CustomHead = () => {
 };
 export const CustomBody = () => {
   const data = useContext(DataContext);
-  return <ModalBody></ModalBody>;
+  return (
+    <ModalBody>
+      <div className="charts">
+        <CustomDough />
+      </div>
+    </ModalBody>
+  );
 };
 export const CustomFoot = ({ closeModal, submitModal }) => {
   return (

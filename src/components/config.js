@@ -4,30 +4,47 @@ export const ATTRIBUTION =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 export const ZOOM = 9;
 //should not hard code this key, should change this ? env variable?
+//environment variables not going to front end by webpack
 export const revGeoApi = "3c9ef7c7a5494283b4ddc09b8465ed57";
 export const COORDS = [-33.92, 18.42];
 export const reverseGeocodingUrl = (lat, lng, revGeoApi) =>
   `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&apiKey=${revGeoApi}`;
-export const clearWorkout = () => {
-  return {
-    city: "",
-    country: "",
-    country_code: "za",
-    state: "",
-    type: "running",
-    id: "",
-    flag: "",
-    date: "",
-    coords: [],
-    distance: 0,
-    duration: 0,
-    speed: 0,
-    pace: 0,
-    elevation: 0,
-    cadence: 0,
-    description: "",
-    shortDescription: "",
-  };
+
+export const SYMBOLS = [
+  "GBPUSD",
+  "USDCAD",
+  "USDJPY",
+  "EURUSD",
+  "NZDUSD",
+  "USDCHF",
+];
+export const getGBPUSD = (amts) =>
+  amts
+    .filter((amt) => amt.symbol !== SYMBOLS[0])
+    .reduce((acc, val) => acc + val.profit, 0);
+export const getUSDCAD = (amts) =>
+  amts
+    .filter((amt) => amt.symbol !== SYMBOLS[1])
+    .reduce((acc, val) => acc + val.profit, 0);
+export const getUSDJPY = (amts) =>
+  amts
+    .filter((amt) => amt.symbol !== SYMBOLS[2])
+    .reduce((acc, val) => acc + val.profit, 0);
+export const getEURUSD = (amts) =>
+  amts
+    .filter((amt) => amt.symbol !== SYMBOLS[3])
+    .reduce((acc, val) => acc + val.profit, 0);
+export const getNZDUSD = (amts) =>
+  amts
+    .filter((amt) => amt.symbol !== SYMBOLS[4])
+    .reduce((acc, val) => acc + val.profit, 0);
+export const getUSDCHF = (amts) =>
+  amts
+    .filter((amt) => amt.symbol !== SYMBOLS[5])
+    .reduce((acc, val) => acc + val.profit, 0);
+
+export const compare = (a, b) => {
+  return a.time - b.time;
 };
 export async function setName(lat, lng) {
   const url = reverseGeocodingUrl(lat, lng, revGeoApi);
@@ -36,7 +53,6 @@ export async function setName(lat, lng) {
   if (!resp.ok) return "Unknown";
   return data.features[0].properties.city;
 }
-
 export async function metaConnection(setAccount, setConnection) {
   const token =
     "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI5YThjNmFmZTI4MmQ2YTM1NmJhYTA5OWY0MTc3NzdkZCIsInBlcm1pc3Npb25zIjpbXSwiYWNjZXNzUnVsZXMiOlt7ImlkIjoidHJhZGluZy1hY2NvdW50LW1hbmFnZW1lbnQtYXBpIiwibWV0aG9kcyI6WyJ0cmFkaW5nLWFjY291bnQtbWFuYWdlbWVudC1hcGk6cmVzdDpwdWJsaWM6KjoqIl0sInJvbGVzIjpbInJlYWRlciIsIndyaXRlciJdLCJyZXNvdXJjZXMiOlsiYWNjb3VudDokVVNFUl9JRCQ6ZTMwNGE4MDAtNTFlNC00MTYzLTkxZTYtZjE4NzIxOWEyMDczIl19LHsiaWQiOiJtZXRhYXBpLXJlc3QtYXBpIiwibWV0aG9kcyI6WyJtZXRhYXBpLWFwaTpyZXN0OnB1YmxpYzoqOioiXSwicm9sZXMiOlsicmVhZGVyIiwid3JpdGVyIl0sInJlc291cmNlcyI6WyJhY2NvdW50OiRVU0VSX0lEJDplMzA0YTgwMC01MWU0LTQxNjMtOTFlNi1mMTg3MjE5YTIwNzMiXX0seyJpZCI6Im1ldGFhcGktcnBjLWFwaSIsIm1ldGhvZHMiOlsibWV0YWFwaS1hcGk6d3M6cHVibGljOio6KiJdLCJyb2xlcyI6WyJyZWFkZXIiLCJ3cml0ZXIiXSwicmVzb3VyY2VzIjpbImFjY291bnQ6JFVTRVJfSUQkOmUzMDRhODAwLTUxZTQtNDE2My05MWU2LWYxODcyMTlhMjA3MyJdfSx7ImlkIjoibWV0YWFwaS1yZWFsLXRpbWUtc3RyZWFtaW5nLWFwaSIsIm1ldGhvZHMiOlsibWV0YWFwaS1hcGk6d3M6cHVibGljOio6KiJdLCJyb2xlcyI6WyJyZWFkZXIiLCJ3cml0ZXIiXSwicmVzb3VyY2VzIjpbImFjY291bnQ6JFVTRVJfSUQkOmUzMDRhODAwLTUxZTQtNDE2My05MWU2LWYxODcyMTlhMjA3MyJdfSx7ImlkIjoibWV0YXN0YXRzLWFwaSIsIm1ldGhvZHMiOlsibWV0YXN0YXRzLWFwaTpyZXN0OnB1YmxpYzoqOioiXSwicm9sZXMiOlsicmVhZGVyIl0sInJlc291cmNlcyI6WyJhY2NvdW50OiRVU0VSX0lEJDplMzA0YTgwMC01MWU0LTQxNjMtOTFlNi1mMTg3MjE5YTIwNzMiXX0seyJpZCI6InJpc2stbWFuYWdlbWVudC1hcGkiLCJtZXRob2RzIjpbInJpc2stbWFuYWdlbWVudC1hcGk6cmVzdDpwdWJsaWM6KjoqIl0sInJvbGVzIjpbInJlYWRlciIsIndyaXRlciJdLCJyZXNvdXJjZXMiOlsiYWNjb3VudDokVVNFUl9JRCQ6ZTMwNGE4MDAtNTFlNC00MTYzLTkxZTYtZjE4NzIxOWEyMDczIl19XSwidG9rZW5JZCI6IjIwMjEwMjEzIiwiaW1wZXJzb25hdGVkIjpmYWxzZSwicmVhbFVzZXJJZCI6IjlhOGM2YWZlMjgyZDZhMzU2YmFhMDk5ZjQxNzc3N2RkIiwiaWF0IjoxNjk5NjI5MjQ5LCJleHAiOjE3MDc0MDUyNDl9.FeFSnRFktB_Hb1FrcSVAeKm0yjc_c-0oivACo_1Gq4c7k8fNdmE9c6od2dxInZP75xmxulb8ALQAMtQqiEJbpN4E36plrgqo9hSQQcsfBeNMVo_YLww2dHBPT-9HX9rHVmhVtvwxy1lIF80K9sBC4Rq1lgt00ymNhHcVFozao43SuwtIyMGkoB22hcfa5spx3GW-1wnboFToLfow4QTDfHsc6kZqTOxyWDmQfps2Tx_OAXQSvpiE-kRDm_nh6_QaRzpXD3c5xFVB-iGsqyrpplg8TmBCH9OLzIp0MRkye_4disasPwVFBDjKT3B5ejwXVHFlOKZUp5UP8JwcSRN8Ex2KkFH7rBzvsrAnv6d_3YJ17AlzbzExMXxUOORLgLhSdvYz7xDcXQ1nUprkYJWUKglvpuxHW_mXgV0VZNNH_FfD-mRMYwRlPBKFykoE14BWwlAy4yy1tQMhh8NfkLy_qTMgfvlayoOo-BTidGEujg0QcSdS2Q01jIUmccGmX0KQT9G_w5FO5qPfKk_WtNAfo8pVekXWpFhNpKEPSELncRVodAcJKuSAKPH-EvfLCX_teO8FUqTyN9F0AHSibBjbU1d1iE-w2TgJpA7Iyq44uS6vFbcY21zPwpqMDDC_JVS5-ckMIsc8kY6WNF6AWOc_XLXfui8fPcqSd5Hg5DOxWh4";
@@ -70,7 +86,6 @@ export async function metaConnection(setAccount, setConnection) {
   setAccount(account);
   setConnection(connection);
 }
-
 export const formatCurr = (amt) => {
   const options = { style: "currency", currency: "ZAR" };
   return Intl.NumberFormat("en-ZA", options).format(amt);
@@ -91,4 +106,10 @@ export const calcLosses = (amts) => {
 };
 export const callSummary = (amts) => {
   return amts.reduce((acc, val) => acc + val.profit, 0) * 18;
+};
+export const getPositives = (amts) => {
+  return amts.filter((amt) => amt.profit > 0);
+};
+export const getNegatives = (amts) => {
+  return amts.filter((amt) => amt.profit < 0);
 };

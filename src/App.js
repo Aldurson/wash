@@ -5,7 +5,7 @@ import { Map } from "./components/Map";
 import { CustomModal } from "./components/CustomModal";
 import { Sidebar } from "./components/Sidebar";
 
-import { metaConnection } from "./components/config.js";
+import { metaConnection, compare } from "./components/config.js";
 import { Button } from "react-bootstrap";
 const root = reactDom.createRoot(document.getElementById("root"));
 export const DataContext = createContext(null);
@@ -43,7 +43,7 @@ const App = () => {
               const { deals } = data;
               const formDeals = deals.filter((data) => data.profit !== 0);
               console.log(formDeals);
-              setData(formDeals);
+              setData(formDeals.sort(compare));
             });
         } catch (err) {
           console.log(err.message);

@@ -89,6 +89,12 @@ body {
 
   overscroll-behavior-y: none;
 }
+.charts {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
 .sidebar {
   flex-basis: 30rem;
   font-size: 0.6rem;
