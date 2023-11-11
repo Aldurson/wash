@@ -47,7 +47,7 @@ function RenderMarker({ workout }) {
     </Marker>
   );
 }
-export const Map = ({ setActive, setCred }) => {
+export const Map = () => {
   function MoveTo({ mCoords }) {
     const map = useMap();
     useEffect(

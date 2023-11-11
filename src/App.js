@@ -16,14 +16,6 @@ const App = () => {
   const [connection, setConnection] = useState("");
   const [active, setActive] = useState(false);
 
-  useEffect(
-    function () {
-      console.log("looking at data");
-      const total = data.reduce((acc, val) => acc + val.profit, 0);
-      console.log(total);
-    },
-    [data]
-  );
   useEffect(function () {
     try {
       console.log("Not Connected");
@@ -36,7 +28,6 @@ const App = () => {
       account.undeploy();
     };
   }, []);
-  function formatData(data) {}
   useEffect(
     function () {
       const timer = setInterval(() => {
@@ -72,7 +63,7 @@ const App = () => {
         <React.StrictMode>
           <DataContext.Provider value={{ data }}>
             <Sidebar />
-            <Map setActive={setActive} />
+            <Map />
             <div
               onClick={butLive}
               style={{

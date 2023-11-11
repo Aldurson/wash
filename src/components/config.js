@@ -70,3 +70,25 @@ export async function metaConnection(setAccount, setConnection) {
   setAccount(account);
   setConnection(connection);
 }
+
+export const formatCurr = (amt) => {
+  const options = { style: "currency", currency: "ZAR" };
+  return Intl.NumberFormat("en-ZA", options).format(amt);
+};
+export const calcWins = (amts) => {
+  return (
+    amts
+      .filter((data) => data.profit > 0)
+      .reduce((acc, val) => acc + val.profit, 0) * 18
+  );
+};
+export const calcLosses = (amts) => {
+  return (
+    amts
+      .filter((data) => data.profit < 0)
+      .reduce((acc, val) => acc + val.profit, 0) * 18
+  );
+};
+export const callSummary = (amts) => {
+  return amts.reduce((acc, val) => acc + val.profit, 0) * 18;
+};
