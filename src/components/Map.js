@@ -10,7 +10,7 @@ import {
 } from "react-leaflet";
 import img1 from "../img/run.gif";
 import img2 from "../img/cycle.gif";
-import { WorkoutContext, WorkoutsContext } from "../App";
+import { DataContext } from "../App";
 import {
   COORDS,
   URL,
@@ -47,10 +47,7 @@ function RenderMarker({ workout }) {
     </Marker>
   );
 }
-export const Map = ({ setActive, center, setCred }) => {
-  const { setWorkout } = useContext(WorkoutContext);
-  const { workouts } = useContext(WorkoutsContext);
-
+export const Map = ({ setActive, setCred }) => {
   function MoveTo({ mCoords }) {
     const map = useMap();
     useEffect(
@@ -139,11 +136,6 @@ export const Map = ({ setActive, center, setCred }) => {
     <>
       <MapContainer zoom={13} center={COORDS} id="map">
         <TileLayer url={URL} attribution={ATTRIBUTION} />
-        <EventHandlers />
-        <MoveTo mCoords={center} />
-        {workouts.map((workout, i) => (
-          <RenderMarker key={i} workout={workout} />
-        ))}
       </MapContainer>
     </>
   );

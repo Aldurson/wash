@@ -1,53 +1,37 @@
 import { useContext } from "react";
-import { WorkoutsContext } from "../App";
+import { DataContext } from "../App";
 import React from "react";
 
 export const Sidebar = ({ setCenter }) => {
-  const { workouts } = useContext(WorkoutsContext);
+  const { data } = useContext(DataContext);
 
-  function MenuItem({ workout, setCenter }) {
+  function MenuItem({ data, setCenter }) {
     return (
       <div
-        className={`menu_item workout--${workout.type}`}
-        onClick={() => {
-          setCenter(workout.coords);
-        }}
+        className={`menu_item workout--${
+          data.profit > 0 ? "running" : "cycling"
+        }`}
       >
         <div className="list_item">
-          <p>
-            {workout.type === "running" ? "🏃🏿‍♂️" : `🚵🏿‍♀️`} {workout.distance} km
-          </p>
-          <p>⏰ {workout.duration + " min"}</p>
-          <img src={workout.flag} width={40} height={30}></img>
+          <p>Pair {data.symbol}</p>
+          <p>⏰ Profit {data.profit}</p>
         </div>
         <div className="list_item">
           {" "}
-          <p>
-            {workout.type === "running"
-              ? `⚡️ ${workout.pace} min/m`
-              : `⚡️ ${workout.speed} km/h`}
-          </p>{" "}
-          <p>
-            {workout.type === "running"
-              ? `🦶🏿 ${workout.cadence} spm`
-              : `⛰ ${workout.elevation} m`}
-          </p>{" "}
-          <p style={{ color: "red", fontSize: "0.7rem" }}>
-            [{workout.coords[0]}, {workout.coords[1]}]
-          </p>
+          <p>Price {data.price}</p> <p>Volume {data.volume}</p>
         </div>
         <div>
-          <p>📰 {workout.description}</p>
+          <p>📰 {data.brokerTime}</p>
         </div>
       </div>
     );
   }
   return (
     <div className="sidebar">
-      <h2 style={{ textAlign: "center" }}>Exercises</h2>
+      <h2 style={{ textAlign: "center" }}>Orders</h2>
       <div style={{ overflow: "auto" }}>
-        {workouts.map((workout, i) => (
-          <MenuItem key={i} workout={workout} setCenter={setCenter} />
+        {data.map((data, i) => (
+          <MenuItem key={i} data={data} />
         ))}
       </div>
     </div>

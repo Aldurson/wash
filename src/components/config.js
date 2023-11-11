@@ -59,14 +59,14 @@ export async function metaConnection(setAccount, setConnection) {
   await account.waitConnected();
 
   // connect to MetaApi API
-  let connection = account.getRPCConnection();
+  const connection = account.getRPCConnection();
   await connection.connect();
+  setAccount(account);
+  setConnection(connection);
 
   // wait until terminal state synchronized to the local state
   console.log(
     "Waiting for SDK to synchronize to terminal state (may take some time depending on your history size)"
   );
   await connection.waitSynchronized();
-  setAccount(account);
-  setConnection(connection);
 }
