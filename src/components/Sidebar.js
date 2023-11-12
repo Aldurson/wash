@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { DataContext } from "../App";
 import React from "react";
-import { calcLosses, calcWins, callSummary, formatCurr } from "./config";
+import { FormatDealArray } from "./config";
 
 export const Sidebar = () => {
   const { data } = useContext(DataContext);
@@ -15,7 +15,7 @@ export const Sidebar = () => {
       >
         <div className="list_item">
           <p>Pair {data.symbol}</p>
-          <p>Profit R {data.profit * 18}</p>
+          <p>Profit R {FormatDealArray.formatCurr(data.profit)}</p>
         </div>
         <div className="list_item">
           {" "}
@@ -33,16 +33,16 @@ export const Sidebar = () => {
       <h2 style={{ textAlign: "center" }}>Orders</h2>
       <div className="list_item">
         <p>Num of orders: {data.length}</p>{" "}
-        <p>Profit {formatCurr(callSummary(data))}</p>
+        <p>Profit {FormatDealArray.callSummary(data)}</p>
       </div>
       <div className="list_item">
         {" "}
-        <p>Wins of orders: {formatCurr(calcWins(data))}</p>
-        <p>Losses of orders: {formatCurr(calcLosses(data))}</p>
+        <p>Wins of orders: {FormatDealArray.calcWins(data)}</p>
+        <p>Losses of orders: {FormatDealArray.calcLosses(data)}</p>
       </div>
       <div className="list_item">
-        <p>Num of wins: {data.filter((dat) => dat.profit > 0).length}</p>
-        <p>Num of losses: {data.filter((dat) => dat.profit < 0).length}</p>
+        <p>Num of wins: {FormatDealArray.getPositivesArr(data).length}</p>
+        <p>Num of losses: {FormatDealArray.getNegativesArr(data).length}</p>
       </div>
       <div style={{ overflow: "auto" }}>
         {data.map((data, i) => (

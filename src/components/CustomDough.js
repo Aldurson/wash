@@ -2,29 +2,22 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { DataContext } from "../App";
 import { useContext } from "react";
-import {
-  getUSDCAD,
-  getEURUSD,
-  getGBPUSD,
-  getNZDUSD,
-  getUSDCHF,
-  getUSDJPY,
-  SYMBOLS,
-} from "./config";
+import { FormatDealArray } from "./config";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function CustomDough() {
   const { data } = useContext(DataContext);
   const dataArr = [
-    getGBPUSD(data),
-    getUSDCAD(data),
-    getUSDJPY(data),
-    getEURUSD(data),
-    getNZDUSD(data),
-    getUSDCHF(data),
+    FormatDealArray.getGBPUSDValun(data),
+    FormatDealArray.getUSDCADValun(data),
+    FormatDealArray.getUSDJPYValun(data),
+    FormatDealArray.getEURUSDValun(data),
+    FormatDealArray.getNZDUSDValun(data),
+    FormatDealArray.getUSDCHFValun(data),
   ];
   const data1 = {
-    labels: SYMBOLS,
+    labels: FormatDealArray.SYMBOLS,
     datasets: [
       {
         label: "# of Deals",

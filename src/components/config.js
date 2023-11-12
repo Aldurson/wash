@@ -10,42 +10,90 @@ export const COORDS = [-33.92, 18.42];
 export const reverseGeocodingUrl = (lat, lng, revGeoApi) =>
   `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&apiKey=${revGeoApi}`;
 
-export const SYMBOLS = [
-  "GBPUSD",
-  "USDCAD",
-  "USDJPY",
-  "EURUSD",
-  "NZDUSD",
-  "USDCHF",
-];
-export const getGBPUSD = (amts) =>
-  amts
-    .filter((amt) => amt.symbol !== SYMBOLS[0])
-    .reduce((acc, val) => acc + val.profit, 0);
-export const getUSDCAD = (amts) =>
-  amts
-    .filter((amt) => amt.symbol !== SYMBOLS[1])
-    .reduce((acc, val) => acc + val.profit, 0);
-export const getUSDJPY = (amts) =>
-  amts
-    .filter((amt) => amt.symbol !== SYMBOLS[2])
-    .reduce((acc, val) => acc + val.profit, 0);
-export const getEURUSD = (amts) =>
-  amts
-    .filter((amt) => amt.symbol !== SYMBOLS[3])
-    .reduce((acc, val) => acc + val.profit, 0);
-export const getNZDUSD = (amts) =>
-  amts
-    .filter((amt) => amt.symbol !== SYMBOLS[4])
-    .reduce((acc, val) => acc + val.profit, 0);
-export const getUSDCHF = (amts) =>
-  amts
-    .filter((amt) => amt.symbol !== SYMBOLS[5])
-    .reduce((acc, val) => acc + val.profit, 0);
-
-export const compare = (a, b) => {
-  return a.time - b.time;
-};
+export class FormatDealArray {
+  static SYMBOLS = ["GBPUSD", "USDCAD", "USDJPY", "EURUSD", "NZDUSD", "USDCHF"];
+  static formatCurr = (amt) => {
+    const options = { style: "currency", currency: "ZAR" };
+    return Intl.NumberFormat("en-ZA", options).format(amt * 18);
+  };
+  static calcWins = (amts) => {
+    return this.formatCurr(
+      amts
+        .filter((data) => data.profit > 0)
+        .reduce((acc, val) => acc + val.profit, 0)
+    );
+  };
+  static calcLosses = (amts) => {
+    return this.formatCurr(
+      amts
+        .filter((data) => data.profit < 0)
+        .reduce((acc, val) => acc + val.profit, 0)
+    );
+  };
+  static callSummary = (amts) => {
+    return this.formatCurr(amts.reduce((acc, val) => acc + val.profit, 0));
+  };
+  static getPositivesArr = (amts) => {
+    return amts.filter((amt) => amt.profit > 0);
+  };
+  static getNegativesArr = (amts) => {
+    return amts.filter((amt) => amt.profit < 0);
+  };
+  static sortArr = (amts) => {
+    const compare = (a, b) => a.time - b.time;
+    return amts.sort(compare);
+  };
+  //getting the summ value for each symbol arr
+  static getGBPUSDVal = (amts) =>
+    this.formatCurr(
+      this.getGBPUSDArr(amts).reduce((acc, val) => acc + val.profit, 0)
+    );
+  static getUSDCADVal = (amts) =>
+    this.formatCurr(
+      this.getUSDCADArr(amts).reduce((acc, val) => acc + val.profit, 0)
+    );
+  static getUSDJPYVal = (amts) =>
+    this.formatCurr(
+      this.getUSDJPYArr(amts).reduce((acc, val) => acc + val.profit, 0)
+    );
+  static getEURUSDVal = (amts) =>
+    this.formatCurr(
+      this.getEURUSDArr(amts).reduce((acc, val) => acc + val.profit, 0)
+    );
+  static getNZDUSDVal = (amts) =>
+    this.formatCurr(
+      this.getNZDUSDArr(amts).reduce((acc, val) => acc + val.profit, 0)
+    );
+  static getUSDCHFVal = (amts) =>
+    this.formatCurr(
+      this.getUSDCHFArr(amts).reduce((acc, val) => acc + val.profit, 0)
+    );
+  static getGBPUSDValun = (amts) =>
+    this.getGBPUSDArr(amts).reduce((acc, val) => acc + val.profit, 0);
+  static getUSDCADValun = (amts) =>
+    this.getUSDCADArr(amts).reduce((acc, val) => acc + val.profit, 0);
+  static getUSDJPYValun = (amts) =>
+    this.getUSDJPYArr(amts).reduce((acc, val) => acc + val.profit, 0);
+  static getEURUSDValun = (amts) =>
+    this.getEURUSDArr(amts).reduce((acc, val) => acc + val.profit, 0);
+  static getNZDUSDValun = (amts) =>
+    this.getNZDUSDArr(amts).reduce((acc, val) => acc + val.profit, 0);
+  static getUSDCHFValun = (amts) =>
+    this.getUSDCHFArr(amts).reduce((acc, val) => acc + val.profit, 0);
+  //getting the arrays
+  static getGBPUSDArr = (amts) =>
+    amts.filter((amt) => amt.symbol !== this.SYMBOLS[0]);
+  static getUSDCADArr = (amts) =>
+    amts.filter((amt) => amt.symbol !== this.SYMBOLS[1]);
+  static getUSDJPYArr = (amts) =>
+    amts.filter((amt) => amt.symbol !== this.SYMBOLS[2]);
+  static getEURUSDArr = (amts) =>
+    amts.filter((amt) => amt.symbol !== this.SYMBOLS[3]);
+  static getNZDUSDArr = (amts) =>
+    amts.filter((amt) => amt.symbol !== this.SYMBOLS[4]);
+  static getUSDCHFArr = (amts) =>
+    amts.filter((amt) => amt.symbol !== this.SYMBOLS[5]);
+}
 export async function setName(lat, lng) {
   const url = reverseGeocodingUrl(lat, lng, revGeoApi);
   const resp = await fetch(url);
@@ -86,30 +134,3 @@ export async function metaConnection(setAccount, setConnection) {
   setAccount(account);
   setConnection(connection);
 }
-export const formatCurr = (amt) => {
-  const options = { style: "currency", currency: "ZAR" };
-  return Intl.NumberFormat("en-ZA", options).format(amt);
-};
-export const calcWins = (amts) => {
-  return (
-    amts
-      .filter((data) => data.profit > 0)
-      .reduce((acc, val) => acc + val.profit, 0) * 18
-  );
-};
-export const calcLosses = (amts) => {
-  return (
-    amts
-      .filter((data) => data.profit < 0)
-      .reduce((acc, val) => acc + val.profit, 0) * 18
-  );
-};
-export const callSummary = (amts) => {
-  return amts.reduce((acc, val) => acc + val.profit, 0) * 18;
-};
-export const getPositives = (amts) => {
-  return amts.filter((amt) => amt.profit > 0);
-};
-export const getNegatives = (amts) => {
-  return amts.filter((amt) => amt.profit < 0);
-};

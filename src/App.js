@@ -5,7 +5,7 @@ import { Map } from "./components/Map";
 import { CustomModal } from "./components/CustomModal";
 import { Sidebar } from "./components/Sidebar";
 
-import { metaConnection, compare } from "./components/config.js";
+import { metaConnection, FormatDealArray } from "./components/config.js";
 import { Button } from "react-bootstrap";
 const root = reactDom.createRoot(document.getElementById("root"));
 export const DataContext = createContext(null);
@@ -42,8 +42,8 @@ const App = () => {
             .then((data) => {
               const { deals } = data;
               const formDeals = deals.filter((data) => data.profit !== 0);
-              console.log(formDeals);
-              setData(formDeals.sort(compare));
+              //console.log(formDeals);
+              if (formDeals) setData(FormatDealArray.sortArr(formDeals));
             });
         } catch (err) {
           console.log(err.message);

@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Modal } from "react-bootstrap";
 import {
   CustomBody,
@@ -16,7 +15,6 @@ export const CustomModal = ({ active, setActive }) => {
     evt.preventDefault();
     console.log("Form submitted");
   }
-
   return (
     <Modal show={active} onHide={closeModal} size="lg" centered={true}>
       <CustomHead />
